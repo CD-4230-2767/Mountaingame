@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+
 public class PlayerControler : MonoBehaviour
 {
+
     public float jumpForce = 5f;
     private bool isGrounded;
     private Rigidbody rb;
@@ -22,11 +24,19 @@ public class PlayerControler : MonoBehaviour
     public TextMeshProUGUI countText;
     public TextMeshProUGUI resultText;
 
+    public AudioClip jumpSound;
+    public AudioClip speedSound;
+    public AudioClip winSound;
+
+    private AudioSource audioSource;
+
     public GameObject panel;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        audioSource = GetComponent<AudioSource>();
 
         cotJum = 0;
         cotSpe = 0;
@@ -98,6 +108,9 @@ public class PlayerControler : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count++;
+
+            audioSource.PlayOneShot(winSound);
+
             SetCountText();
         }
 
@@ -105,6 +118,7 @@ public class PlayerControler : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             cotSpe++;
+            audioSource.PlayOneShot(speedSound);
             SetCountText();
         }
 
@@ -112,6 +126,7 @@ public class PlayerControler : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             cotJum++;
+            audioSource.PlayOneShot(jumpSound);
             SetCountText();
         }
 
